@@ -1,0 +1,22 @@
+{
+  "name": "cs361_covidcoach",
+  "version": "1.0.0",
+  "description": "CS361 Team project built by #teamstayathome",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pabloturati/CS361_COVIDCoach.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pabloturati/CS361_COVIDCoach/issues"
+  },
+  "homepage": "https://github.com/pabloturati/CS361_COVIDCoach#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
