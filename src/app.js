@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 app.use(express.static(path.join(__dirname,'../public')));
 
+// Useful if we want to deply to Heroku later
 const port = process.env.PORT || 3000
 
 app.get('',(req, res)=>{
