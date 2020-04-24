@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pabloturati/CS361_COVIDCoach#readme",
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "express": "^4.17.1"
   }
 }
