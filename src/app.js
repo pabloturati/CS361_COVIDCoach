@@ -18,3 +18,7 @@ app.get('',(req, res)=>{
 app.listen(port, ()=>{
     console.log(`Server is up on port ${port}`);
 }); 
+
+//Heroku notes:
+// When working off a branch, push via git push heroku your-branch-name:master
+// Heroku URL: https://covid-coach.herokuapp.com/
