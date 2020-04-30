@@ -17,4 +17,4 @@ app.get('',(req, res)=>{
 // Run using node src/app.js
 app.listen(port, ()=>{
     console.log(`Server is up on port ${port}`);
-});
+}); 
