@@ -7,12 +7,13 @@ body {
 header {
 	background-color: #191970;
 	font-size: 40px;
+	font-weight: bold;
 	color: #FFFFFF;
 }
 
 .site-title {
   margin: 0;
-  padding: 20px;
+  padding: 25px;
 }
 
 .navbar {
@@ -35,7 +36,7 @@ header {
 .navitem a {
   display: inline-block;
   color: #454545;
-  padding: 10px 20px;
+  padding: 0px 30px;
 }
 
 .navitem.right {
@@ -45,3 +46,32 @@ header {
 h3 {
   text-align: center;
 }
+
+.col{
+	float: none !important;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.card{
+    height: 100%;
+    min-height: 500px !important;
+}
+
+#loader{
+	height: 100vh;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.progress{
+	display: none;
+}
+
+.errorMsg{
+	font-size: 34px;
+	height: 100vh;
+	align-items: center;
+	display: flex;
+	justify-content: center;
