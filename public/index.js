@@ -1,25 +1,24 @@
-$(document).ready(function(){
-  let url = "http://newsapi.org/v2/top-headlines?q=COVID&country=us&apiKey=859544f6579f40a2aaf1474bee4c6356";
-
+$(document).ready(function () {
+  let url = `http://newsapi.org/v2/top-headlines?q=COVID&country=us&apiKey=859544f6579f40a2aaf1474bee4c6356`
   $.ajax({
-    url:url,
-    method:"GET",
-    dataType:"Json",
-    beforeSend: function(){
-      $(".progress").show();
+    url: url,
+    method: 'GET',
+    dataType: 'Json',
+    beforeSend: function () {
+      $('.progress').show()
     },
 
-    complete: function(){
-      $(".progress").hide();
+    complete: function () {
+      $('.progress').hide()
     },
 
-    success: function(news){
-      console.log(news);
-      let output = "";
-      let latestNews = news.articles;
+    success: function (news) {
+      console.log(news)
+      let output = ''
+      let latestNews = news.articles
 
-      for(var i in latestNews){
-        output +=`
+      for (var i in latestNews) {
+        output += `
         <div class="row">
         <div class="col col s12 m9 l10">
           <div class="card medium hoverable">
@@ -52,16 +51,16 @@ $(document).ready(function(){
           </div>
         </div>
         </div>
-        `;
+        `
       }
-      if(output !== ""){
-        $("#newsResults").html(output);
+      if (output !== '') {
+        $('#newsResults').html(output)
       }
     },
 
-    error: function(){
-      console.log("error");
-      $("#newsResults").html("Some error occured");
-    }
+    error: function () {
+      console.log('error')
+      $('#newsResults').html('Some error occured')
+    },
   })
 })

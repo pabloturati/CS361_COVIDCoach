@@ -1,23 +1,37 @@
-const express = require('express');
-const path = require('path');
+require('dotenv').config()
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const express = require('express')
+const path = require('path')
+const google = require('googleapis').google
 
-const app = express();
-app.use(express.static(path.join(__dirname,'../public')));
+const OAuth2 = google.auth.OAuth2
+const CONFIG = require('./config')
 
-// Useful if we want to deply to Heroku later
-const port = process.env.PORT || 3000
+const app = express()
 
-app.get('',(req, res)=>{
+// Middleware Setup
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
-    res.send('Hello COVIDCoach');
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
 
-});
+app.use(express.static(path.join(__dirname, '../public')))
 
+app.get('/', (req, res) => {
+  res.send('Hello COVIDCoach')
+})
+
+const auth = require('./routes/auth')
+app.use('/', auth)
 
 // Run using node src/app.js
-app.listen(port, ()=>{
-    console.log(`Server is up on port ${port}`);
-});
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`)
+})
 
 //Heroku notes:
 // When working off a branch, push via git push heroku your-branch-name:master
