@@ -1,10 +1,9 @@
-const port = process.env.PORT
-const baseURL = `http://localhost:${port}`
+const baseURL = `http://localhost:${process.env.PORT}`
 module.exports = {
   // The secret for the encryption of the jsonwebtoken
   JWTsecret: process.env.JWT_SECRET,
   baseURL: baseURL,
-  port: port,
+  port: process.env.PORT,
   // The credentials and information for OAuth2
   oauth2Credentials: {
     client_id: process.env.GOOGLE_CLIENT_ID,

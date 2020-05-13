@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken')
 const google = require('googleapis').google
 
 const OAuth2 = google.auth.OAuth2
-const CONFIG = require('../config.js')
+const CONFIG = require('../constants/config.js')
 
 const createOauth2Client = () =>
   new OAuth2(
-    googleConfig.oauth2Credentials.client_id,
-    googleConfig.oauth2Credentials.client_secret,
-    googleConfig.oauth2Credentials.redirect_uris[0]
+    CONFIG.oauth2Credentials.client_id,
+    CONFIG.oauth2Credentials.client_secret,
+    CONFIG.oauth2Credentials.redirect_uris[0]
   )
 
 router.get('/login', (req, res) => {
@@ -22,7 +22,7 @@ router.get('/login', (req, res) => {
     scope: CONFIG.oauth2Credentials.scopes, // Using the access scopes from our config file
   })
 
-  return res.render('index', { loginLink: loginLink })
+  return res.render('login', { loginLink: loginLink })
 })
 
 router.get('/auth_callback', (req, res) => {
