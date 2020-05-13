@@ -13,7 +13,6 @@ $(document).ready(function () {
     },
 
     success: function (news) {
-      console.log(news)
       let output = ''
       let latestNews = news.articles
 
