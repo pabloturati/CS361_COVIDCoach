@@ -19,11 +19,11 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE IF NOT EXISTS Users (
   user_id int auto_increment PRIMARY KEY,
   email varchar(255) NOT NULL UNIQUE,
-  google_auth_token varchar(255) UNIQUE,
+  google_auth_token varchar(255),
   first_name varchar(255) NOT NULL,
   last_name varchar(255) NOT NULL,
   profile_image varchar(255)
-) engine = innoDB;
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS Posts (
   post_id int auto_increment PRIMARY KEY,
@@ -35,7 +35,6 @@ CREATE TABLE IF NOT EXISTS Posts (
   FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
 ) engine = innoDB;
 
-
 CREATE TABLE IF NOT EXISTS Responses (
   response_id int auto_increment PRIMARY KEY,
   post_id int,
@@ -46,7 +45,6 @@ CREATE TABLE IF NOT EXISTS Responses (
   FOREIGN KEY (post_id) REFERENCES Posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE SET NULL ON UPDATE CASCADE
 ) engine = innoDB;
-
 
 CREATE TABLE IF NOT EXISTS Topics (
   topic_id int auto_increment PRIMARY KEY,
@@ -62,4 +60,5 @@ CREATE TABLE IF NOT EXISTS topics_posts (
 )engine = innoDB;
 
 -- Part 3.  Populate base values.
-INSERT INTO Users(email, first_name, last_name) VALUES ('johnlee@email.com', 'John', 'Lee');
+-- INSERT INTO Users(email, first_name, last_name, profile_image, google_auth_token) 
+-- VALUES ('johnlee@email.com', 'John', 'Lee', "https://image.shutterstock.com/image-vector/male-silhouette-avatar-profile-picture-260nw-199246382.jpg", "XXXXX");

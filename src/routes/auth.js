@@ -5,7 +5,34 @@ const google = require('googleapis').google
 
 const OAuth2 = google.auth.OAuth2
 const CONFIG = require('../constants/authConfig.js')
+const ROUTES = require('../constants').ROUTES
+const queries = require('../shared/queries')
 
+const { home, login, createSession, sessionResult } = ROUTES
+const { findUserByEmail, createUserEntry, userDataById } = queries.authQueries
+
+const signup = async (userProfile) => {
+  const {
+    email,
+    given_name: firstName,
+    family_name: lastName,
+    picture: profileImg,
+  } = userProfile
+
+  const usersWithSameEmail = await findUserByEmail(userProfile.email)
+  if (usersWithSameEmail.length > 0) return null
+
+  const userId = await createUserEntry(
+    email,
+    firstName,
+    lastName,
+    profileImg,
+    'pending token'
+  )
+  return userId
+}
+
+// Creates an OAuth2 client object from the credentials in our config file
 const createOauth2Client = () =>
   new OAuth2(
     CONFIG.oauth2Credentials.client_id,
@@ -13,7 +40,7 @@ const createOauth2Client = () =>
     CONFIG.oauth2Credentials.redirect_uris[0]
   )
 
-router.get('/login', (req, res) => {
+router.get(login, (req, res) => {
   const oauth2Client = createOauth2Client()
 
   // Obtain the google login link
@@ -21,30 +48,28 @@ router.get('/login', (req, res) => {
     access_type: 'offline', // Indicates that we need to be able to access data continously without the user constantly giving us consent
     scope: CONFIG.oauth2Credentials.scopes, // Using the access scopes from our config file
   })
-
   return res.render('login', { loginLink: loginLink })
 })
 
-router.get('/auth_callback', (req, res) => {
-  // Create an OAuth2 client object from the credentials in our config file
+router.get(createSession, (req, res) => {
   const oauth2Client = createOauth2Client()
   if (req.query.error) {
     // The user did not give us permission.
-    return res.redirect('/')
+    return res.redirect(home)
   } else {
     oauth2Client.getToken(req.query.code, function (err, token) {
-      if (err) return res.redirect('/')
+      if (err) return res.redirect(home)
       // Store the credentials given by google into a jsonwebtoken in a cookie called 'jwt'
       res.cookie('jwt', jwt.sign(token, CONFIG.JWTsecret))
-      return res.redirect('/get_some_data')
+      return res.redirect(sessionResult)
     })
   }
 })
 
-router.get('/get_some_data', async (req, res, next) => {
+router.get(sessionResult, async (req, res, next) => {
   if (!req.cookies.jwt) {
     // We haven't logged in
-    return res.redirect('/')
+    return res.redirect(home)
   }
   // Create an OAuth2 client object from the credentials in our config file
   const oauth2Client = new OAuth2(
@@ -64,10 +89,16 @@ router.get('/get_some_data', async (req, res, next) => {
 
   try {
     const profile = await oauth2.userinfo.get()
-    console.log(profile)
+    const result = await signup(profile.data)
+    if (result) {
+      const userId = result.insertId
+      req.session.userId = userId //Create session
+      const { cookie } = req.session
+      const user = await userDataById(userId)
+      res.send({ ...user[0], expires: cookie.expires })
+    }
     res.send(profile.data)
   } catch (err) {
-    console.log(err)
     next()
   }
 })

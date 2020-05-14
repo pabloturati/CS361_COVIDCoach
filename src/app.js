@@ -4,19 +4,58 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
 const app = express()
+const session = require('express-session')
+const MySQLStore = require('express-mysql-session')(session)
+const mysql = require('./constants/dbConfig')
+const constants = require('./constants')
 
 // Middleware Setup
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-require('hbs')
+console.log(constants.SESSION_EXPIRATION)
 
+// View engine config
+require('hbs')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
+// Path to public setup
 app.use(express.static(path.join(__dirname, '../public')))
 
+// Session config
+const { SESSION_NAME, SESSION_DURATION, SESSION_SECRET } = process.env
+const sessionStore = new MySQLStore(
+  {
+    expiration: constants.SESSION_EXPIRATION, //3h
+    createDatabaseTable: true,
+    schema: {
+      tableName: 'Sessions',
+      columnNames: {
+        session_id: 'session_id',
+        expires: 'expires',
+        data: 'data',
+      },
+    },
+  },
+  mysql.pool
+)
+app.use(
+  session({
+    cookie: {
+      maxAge: parseInt(SESSION_DURATION),
+      sameSite: 'strict',
+    },
+    name: SESSION_NAME,
+    resave: false,
+    saveUninitialized: false, //Verify
+    store: sessionStore,
+    secret: SESSION_SECRET,
+  })
+)
+
+// Route Config
 const auth = require('./routes/auth')
 const news = require('./routes/news')
 const forum = require('./routes/forum')
