@@ -1,14 +1,14 @@
 body {
-	font-family: 'Lato', sans-serif;
-	margin: 0;
-	background-color: #FFFFFF;
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  background-color: #ffffff;
 }
 
 header {
-	background-color: #191970;
-	font-size: 40px;
-	font-weight: bold;
-	color: #FFFFFF;
+  background-color: #191970;
+  font-size: 40px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .site-title {
@@ -18,7 +18,7 @@ header {
 
 .navbar {
   font-size: 22px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .navlist {
@@ -47,31 +47,32 @@ h3 {
   text-align: center;
 }
 
-.col{
-	float: none !important;
+.col {
+  float: none !important;
   margin-left: auto;
-  margin-right: auto
+  margin-right: auto;
 }
 
-.card{
-    height: 100%;
-    min-height: 500px !important;
+.card {
+  height: 100%;
+  min-height: 500px !important;
 }
 
-#loader{
-	height: 100vh;
-	align-items: center;
-	display: flex;
-	justify-content: center;
+#loader {
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
-.progress{
-	display: none;
+.progress {
+  display: none;
 }
 
-.errorMsg{
-	font-size: 34px;
-	height: 100vh;
-	align-items: center;
-	display: flex;
-	justify-content: center;
+.errorMsg {
+  font-size: 34px;
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
