@@ -14,8 +14,6 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-console.log(constants.SESSION_EXPIRATION)
-
 // View engine config
 require('hbs')
 app.set('view engine', 'hbs')
