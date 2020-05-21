@@ -3,11 +3,12 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
-const app = express()
 const session = require('express-session')
 const MySQLStore = require('express-mysql-session')(session)
 const mysql = require('./constants/dbConfig')
 const constants = require('./constants')
+
+const app = express()
 
 // Middleware Setup
 app.use(cookieParser())
@@ -19,12 +20,10 @@ require('hbs')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// Path to public setup
-const staticPaths = ['../forum-app/build', '../public']
-staticPaths.forEach((staticPath) => {
-  app.use(express.static(path.join(__dirname, staticPath), { index: false }))
-})
-
+// Path to public and static setup
+const joinPath = (customPath) => path.join(__dirname, customPath)
+app.use(express.static(joinPath('../forum-app/build'), { index: false }))
+app.use(express.static(joinPath('../public'), { index: false }))
 global.appRoot = path.resolve(__dirname, '../')
 
 // Session config
