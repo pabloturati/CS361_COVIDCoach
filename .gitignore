@@ -3,3 +3,29 @@ node_modules/
 
 # Envirolmental variables
 .env
+
+# Apple filesystem
+.DS_Store
+
+# Forum-app files
+# dependencies
+forum-app/node_modules
+forum-app/.pnp
+forum-app/.pnp.js
+
+# testing
+forum-app/coverage
+
+# production
+forum-app/build
+
+# misc
+forum-app/.DS_Store
+forum-app/.env.local
+forum-app/.env.development.local
+forum-app/.env.test.local
+forum-app/.env.production.local
+
+forum-app/npm-debug.log*
+forum-app/yarn-debug.log*
+forum-app/yarn-error.log*

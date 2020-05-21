@@ -20,7 +20,12 @@ app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
 // Path to public setup
-app.use(express.static(path.join(__dirname, '../public')))
+const staticPaths = ['../forum-app/build', '../public']
+staticPaths.forEach((staticPath) => {
+  app.use(express.static(path.join(__dirname, staticPath), { index: false }))
+})
+
+global.appRoot = path.resolve(__dirname, '../')
 
 // Session config
 const { SESSION_NAME, SESSION_DURATION, SESSION_SECRET } = process.env
