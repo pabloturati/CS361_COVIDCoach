@@ -44,7 +44,42 @@ header {
 }
 
 h3 {
-  text-align: center;
+  font-size: 200%;
+  text-align:left;
+}
+h4{
+	font-size: 200%;
+  	text-align: right;
+}
+
+.tips{
+	padding: 20px;
+	border: 2px solid black;
+	background-color: ;
+}
+
+.tipsitems{
+	text-align: right;
+	color: black;
+	font-size: 120%;
+}
+.tipsitem{
+	font-size: 120%;
+	color: black;
+}
+.link{
+	text-align : right;
+	color: black;
+}
+link:hover{
+	background-color:red;
+}
+.tipsitem:before{
+	content:"• ";
+}
+
+.tipsitems:after {
+    content:"• ";
 }
 
 .col {
@@ -75,4 +110,7 @@ h3 {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+.tips{
+	background-color: #FBEEC1;
 }
