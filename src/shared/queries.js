@@ -25,7 +25,7 @@ const topicsQueries = {
 const postsQueries = {
   findAllPostsByTopicId: (topicId) =>
     runQuery(
-      `SELECT P.post_id AS post_title, date_published, num_of_likes, P.title, content, CONCAT_WS(" ", first_name, last_name) 
+      `SELECT P.post_id, date_published, num_of_likes, P.title AS post_title, content, CONCAT_WS(" ", first_name, last_name), profile_image 
       AS author, T.title, T.topic_id AS topic FROM Posts P 
       INNER JOIN Users U ON P.user_id=U.user_id 
       INNER JOIN topics_posts TP ON P.post_id=TP.post_id 
@@ -33,4 +33,10 @@ const postsQueries = {
       WHERE T.topic_id=${topicId};`
     ),
 }
-module.exports = { authQueries, topicsQueries, postsQueries }
+
+const replyQueries = {
+  findAllRepliesByPostId: (postId) =>
+    runQuery(`SELECT response_id, date_published, num_of_likes, content, CONCAT_WS(" ", first_name, last_name) AS author, profile_image FROM Responses R 
+    INNER JOIN Users U ON R.user_id = U.user_id WHERE post_id=${postId};`),
+}
+module.exports = { authQueries, topicsQueries, postsQueries, replyQueries }

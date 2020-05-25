@@ -1,8 +1,12 @@
 import React, { createContext } from 'react'
 
-export const forumContext = createContext()
+export const ForumContext = createContext()
 
-export const ForumContext = (props) => {
+export const ForumContextProvider = (props) => {
 	const { children, ...rest } = props
-	return <Context.Provider value={{ ...rest }}>{children}</Context.Provider>
+	return (
+		<ForumContext.Provider value={{ ...rest }}>
+			{children}
+		</ForumContext.Provider>
+	)
 }

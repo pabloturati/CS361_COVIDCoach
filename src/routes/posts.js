@@ -3,13 +3,13 @@ const { ROUTES } = require('../constants')
 const { findAllPostsByTopicId } = require('../shared/queries').postsQueries
 
 router.get(ROUTES.posts, async (req, res, next) => {
-  const { topicId } = req.query
-  const posts = await findAllPostsByTopicId(topicId)
-  if (posts instanceof Error) {
+  try {
+    const posts = await findAllPostsByTopicId(req.query.topicId)
+    if (posts instanceof Error) throw posts
+    res.send(posts)
+  } catch (error) {
     console.error(posts)
     next()
-  } else {
-    res.send(posts)
   }
 })
 

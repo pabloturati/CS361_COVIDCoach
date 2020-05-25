@@ -1,17 +1,19 @@
 import React from 'react'
 import './App.scss'
-import ForumContext from '../ForumContext'
+import { ForumContextProvider } from '../ForumContext'
+import { ForumProcedures } from '../ForumProcedures'
 import Header from '../../components/Header/Header'
-import TopicsBar from '../../components/TopicsBar/TopicsBar'
+import TopicsBar from '../TopicsBar/TopicsBar'
 import DiscussionBoard from '../DiscussionBoard/DiscussionBoard'
 
 const App = () => {
+	const proceduresAndContext = ForumProcedures()
 	return (
-		<ForumContext>
+		<ForumContextProvider {...proceduresAndContext}>
 			<Header />
 			<TopicsBar />
 			<DiscussionBoard />
-		</ForumContext>
+		</ForumContextProvider>
 	)
 }
 

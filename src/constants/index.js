@@ -11,6 +11,7 @@ const ROUTES = {
   sessionResult: '/session-result',
   topics: '/topics',
   posts: '/posts',
+  replies: '/replies',
 }
 
 module.exports = { SESSION_EXPIRATION, ROUTES, PAGE_ROUTES }

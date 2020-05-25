@@ -68,6 +68,7 @@ const forum = require('./routes/forum')
 const safety = require('./routes/safety')
 const topics = require('./routes/topics')
 const posts = require('./routes/posts')
+const replies = require('./routes/replies')
 
 app.use('/', news)
 app.use('/', auth)
@@ -75,6 +76,7 @@ app.use('/', forum)
 app.use('/', safety)
 app.use('/', topics)
 app.use('/', posts)
+app.use('/', replies)
 
 // Run using node src/app.js
 const port = process.env.PORT || 3000
