@@ -6,10 +6,10 @@ const google = require('googleapis').google
 const OAuth2 = google.auth.OAuth2
 const CONFIG = require('../constants/authConfig.js')
 const ROUTES = require('../constants').ROUTES
-const queries = require('../shared/queries')
+const { authQueries } = require('../shared/queries')
 
 const { home, login, createSession, sessionResult } = ROUTES
-const { findUserByEmail, createUserEntry, userDataById } = queries.authQueries
+const { findUserByEmail, createUserEntry, userDataById } = authQueries
 
 const signup = async (userProfile) => {
   const {

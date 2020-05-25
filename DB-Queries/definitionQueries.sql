@@ -59,6 +59,40 @@ CREATE TABLE IF NOT EXISTS topics_posts (
   FOREIGN KEY (post_id) REFERENCES Posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 )engine = innoDB;
 
+
 -- Part 3.  Populate base values.
 -- INSERT INTO Users(email, first_name, last_name, profile_image, google_auth_token) 
 -- VALUES ('johnlee@email.com', 'John', 'Lee', "https://image.shutterstock.com/image-vector/male-silhouette-avatar-profile-picture-260nw-199246382.jpg", "XXXXX");
+
+INSERT INTO Topics (topic_id, title) VALUES 
+  (1, "Cases"),
+  (2, "Infections"),
+  (3, "Recomendations"),
+  (4, "Medical Attention"),
+  (5, "Prevention");
+
+INSERT INTO Users (user_id, email,  google_auth_token, first_name, last_name, profile_image) VALUES
+ (1, "john33stevens@gmail.com", "XXXXXXXXXYYYYYYZZZZ", "John", "Stevens", "https://www.ethree.com/wp-content/uploads/2017/10/Stevens-5D3_8699.jpg"),
+ (2, "sanda17bullock@gmail.com", "XXXXXXXXXYYYYYYZZZZ", "Sandra", "Bullock", "https://upload.wikimedia.org/wikipedia/commons/3/3b/Sandra_Bullock_%289192365016%29_%28cropped%29.jpg"),
+ (3, "eri40johnson@gmail.com", "XXXXXXXXXYYYYYYZZZZ", "Erie", "Johnson", "https://www2.erie.gov/johnson/sites/www2.erie.gov.johnson/files/uploads/howard-johnson.jpg");
+
+INSERT INTO Posts (post_id, user_id, date_published, num_of_likes, title, content) VALUES 
+  (1, 1, STR_TO_DATE('03-21-2020', '%m-%d-%Y'), 3, "The struggle to survive", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien pellentesque habitant morbi tristique senectus. In est ante in nibh mauris cursus mattis molestie a. Ut tortor pretium viverra suspendisse potenti."),
+  (2, 1, STR_TO_DATE('03-22-2020', '%m-%d-%Y'), 5, "The beginning of the end", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id velit ut tortor pretium. Rhoncus urna neque viverra justo nec ultrices."),
+  (3, 2, STR_TO_DATE('04-22-2020', '%m-%d-%Y'), 2, "List of Recomendations", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere. Ornare suspendisse sed nisi lacus sed. Enim nec dui nunc mattis enim ut tellus elementum sagittis."),
+  (4, 2, STR_TO_DATE('05-01-2020', '%m-%d-%Y'), 2, "Medical Attention Needed here", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+  (5, 2, STR_TO_DATE('05-02-2020', '%m-%d-%Y'), 0, "Prevention is key", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quis hendrerit dolor magna eget est lorem ipsum dolor. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Volutpat sed cras ornare arcu dui vivamus. Mi ipsum faucibus vitae aliquet nec ullamcorper sit.");
+
+INSERT INTO topics_posts (topic_id, post_id) VALUES 
+(1, 1),
+(1, 2),
+(2, 3),
+(5, 4),
+(4, 4);
+
+INSERT INTO Responses (response_id, post_id, date_published, user_id, num_of_likes, content) VALUES 
+  (1, 1, STR_TO_DATE('03-21-2020', '%m-%d-%Y'), 2, 1, "Their could can widen ten she any. As so we smart those money in. Am wrote up whole so tears sense oh. Absolute required of reserved in offering no. How sense found our those gay again taken the. Had mrs outweigh desirous sex overcame. Improved property reserved disposal do offering me. "),
+  (2, 1, STR_TO_DATE('03-22-2020', '%m-%d-%Y'), 2, 2, "It if sometimes furnished unwilling as additions so."),
+  (3, 2, STR_TO_DATE('04-22-2020', '%m-%d-%Y'), 2, 2, "Call park out she wife face mean."),
+  (4, 2, STR_TO_DATE('05-01-2020', '%m-%d-%Y'), 3, 2, "Passage weather as up am exposed. And natural related man subject. Eagerness get situation his was delighted."),
+  (5, 2, STR_TO_DATE('05-02-2020', '%m-%d-%Y'), 1, 0, "No great but music too old found arose. ");

@@ -7,6 +7,7 @@ const session = require('express-session')
 const MySQLStore = require('express-mysql-session')(session)
 const mysql = require('./constants/dbConfig')
 const constants = require('./constants')
+const cors = require('cors')
 
 const app = express()
 
@@ -19,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 require('hbs')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+//Same site requests
+app.use(cors())
 
 // Path to public and static setup
 const joinPath = (customPath) => path.join(__dirname, customPath)
@@ -62,11 +66,15 @@ const auth = require('./routes/auth')
 const news = require('./routes/news')
 const forum = require('./routes/forum')
 const safety = require('./routes/safety')
+const topics = require('./routes/topics')
+const posts = require('./routes/posts')
 
 app.use('/', news)
 app.use('/', auth)
 app.use('/', forum)
 app.use('/', safety)
+app.use('/', topics)
+app.use('/', posts)
 
 // Run using node src/app.js
 const port = process.env.PORT || 3000
@@ -82,60 +90,57 @@ app.listen(port, () => {
 
 // Array of pins
 const markers = [
-   {
-       coords:{lat:40.710255,lng:-74.005058},
-       content:'NewYork Presbyterian Hospital'
-   },
-   {
-      coords:{lat:45.4993,lng:-122.6849},
-      content:'OHSU Hospital'
-   },
-   {
-      coords:{lat:37.7631,lng:-122.4578},
-      content:'UCSF Medical Center'
-   },
-   {
-      coords:{lat:29.7107,lng:-95.3996},
-      content:'Houston Methodist Hospital'
-   }
+  {
+    coords: { lat: 40.710255, lng: -74.005058 },
+    content: 'NewYork Presbyterian Hospital',
+  },
+  {
+    coords: { lat: 45.4993, lng: -122.6849 },
+    content: 'OHSU Hospital',
+  },
+  {
+    coords: { lat: 37.7631, lng: -122.4578 },
+    content: 'UCSF Medical Center',
+  },
+  {
+    coords: { lat: 29.7107, lng: -95.3996 },
+    content: 'Houston Methodist Hospital',
+  },
 ]
 
-
 function initMap() {
+  // Map options
+  const options = {
+    zoom: 12,
+    center: { lat: 45.5051, lng: -122.675 },
+  }
 
-   // Map options
-   const options = {
-       zoom:12,
-       center:{lat:45.5051,lng:-122.6750}
-   }
+  // New map
+  map = new google.maps.Map(document.getElementById('map'), options)
 
-   // New map
-   map = new google.maps.Map(document.getElementById('map'),options)
+  const addMarker = (props) => {
+    // Add marker
+    const marker = new google.maps.Marker({
+      position: props.coords,
+      map: map,
+    })
 
-   const addMarker = (props) =>{
-       // Add marker
-       const marker = new google.maps.Marker({
-           position:props.coords,
-           map:map
-       })
+    // Check to see if there is
+    if (props.content) {
+      // Displays a popup when a pin is clicked
+      const infoWindow = new google.maps.InfoWindow({
+        content: props.content,
+      })
 
-       // Check to see if there is
-       if(props.content){
+      // Displays a pin on the map
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker)
+      })
+    }
+  }
 
-           // Displays a popup when a pin is clicked
-           const infoWindow = new google.maps.InfoWindow({
-               content:props.content
-           })
-
-           // Displays a pin on the map
-           marker.addListener('click',()=>{
-               infoWindow.open(map, marker);
-           })
-       }
-   }
-
-   // For each pin, we add it to the map
-   markers.forEach((marker)=>{
-       addMarker(marker)
-   })
+  // For each pin, we add it to the map
+  markers.forEach((marker) => {
+    addMarker(marker)
+  })
 }
