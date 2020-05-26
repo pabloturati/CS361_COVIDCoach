@@ -48,7 +48,8 @@ router.get(login, (req, res) => {
     access_type: 'offline', // Indicates that we need to be able to access data continously without the user constantly giving us consent
     scope: CONFIG.oauth2Credentials.scopes, // Using the access scopes from our config file
   })
-  return res.render('login', { loginLink: loginLink })
+  // return res.render('login', { loginLink: loginLink })
+  res.send(loginLink)
 })
 
 router.get(createSession, (req, res) => {

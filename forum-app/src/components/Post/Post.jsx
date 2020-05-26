@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import { Card } from 'react-bootstrap'
 import Reply from '../Reply/Reply'
 import { baseURL } from '../../constants'
 import Loader from '../Loader'
