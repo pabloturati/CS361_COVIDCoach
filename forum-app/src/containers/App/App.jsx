@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.scss'
 import { ForumContextProvider } from '../ForumContext'
 import { ForumProcedures } from '../ForumProcedures'
 import Header from '../../components/Header/Header'

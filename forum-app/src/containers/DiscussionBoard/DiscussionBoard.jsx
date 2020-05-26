@@ -10,11 +10,9 @@ const DiscussionBoard = () => {
 	} = useContext(ForumContext)
 	if (!posts) return <Loader />
 	return (
-		<div className="container">
+		<div className="container-lg mt-3">
 			{posts.map((post) => (
-				<div className="row">
-					<Post key={post.post_id} {...post} />
-				</div>
+				<Post key={post.post_id} {...post} />
 			))}
 		</div>
 	)

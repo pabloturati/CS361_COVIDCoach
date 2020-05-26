@@ -1,6 +1,15 @@
 @import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
+html {
+	font-size: 16px;
+}
 body {
 	font-family: 'Lato', sans-serif;
+}
+
+:root {
+	--gray-text: gray;
+	--dark-blue: #191970;
+	--white: #fff;
 }

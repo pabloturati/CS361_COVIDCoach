@@ -1,0 +1,11 @@
+.topics-bar {
+	li {
+		color: gray;
+	}
+	a {
+		color: inherit;
+	}
+	a:hover {
+		color: var(--dark-blue);
+	}
+}

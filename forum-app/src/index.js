@@ -4,6 +4,7 @@ import './index.scss'
 import App from './containers/App/App.jsx'
 import * as serviceWorker from './serviceWorker'
 import 'normalize.css'
+import 'typeface-roboto'
 
 ReactDOM.render(
 	<React.StrictMode>
