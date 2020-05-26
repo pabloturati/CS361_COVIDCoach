@@ -25,10 +25,10 @@ const topicsQueries = {
 const postsQueries = {
   findAllPostsByTopicId: (topicId) =>
     runQuery(
-      `SELECT P.post_id, date_published, num_of_likes, P.title AS post_title, content, CONCAT_WS(" ", first_name, last_name), profile_image 
-      AS author, T.title, T.topic_id AS topic FROM Posts P 
-      INNER JOIN Users U ON P.user_id=U.user_id 
-      INNER JOIN topics_posts TP ON P.post_id=TP.post_id 
+      `SELECT P.post_id, date_published, num_of_likes, P.title AS post_title, content, CONCAT_WS(" ", first_name, last_name) 
+      AS author, U.profile_image, T.title, T.topic_id AS topic FROM Posts P 
+      INNER JOIN Users U ON P.user_id=U.user_id
+      INNER JOIN topics_posts TP ON P.post_id=TP.post_id
       INNER JOIN Topics T ON T.topic_id=TP.topic_id
       WHERE T.topic_id=${topicId};`
     ),
