@@ -7,7 +7,7 @@ import { baseURL } from '../../constants'
 import Loader from '../Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import DateConverter from '../DateConverter'
-import ProfileImage from '../ProfileImage'
+import Avatar from '@material-ui/core/Avatar'
 
 const Post = ({
 	author,
@@ -39,7 +39,7 @@ const Post = ({
 	return (
 		<div className="row m-0">
 			<div className="col-1 p-0 mt-3">
-				<ProfileImage imgSrc={profileImg} />
+				<Avatar alt={author} src={profileImg} />
 			</div>
 			<div className="col-11 my-3">
 				<div className="row">
@@ -76,7 +76,12 @@ Post.propTypes = {
 	author: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	date_published: PropTypes.string.isRequired,
-	num_of_likes: PropTypes.string.isRequired
+	num_of_likes: PropTypes.number.isRequired,
+	content: PropTypes.string.isRequired,
+	profile_image: PropTypes.string
+}
+Post.defaultProps = {
+	profile_image: null
 }
 
 export default Post

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import DateConverter from '../DateConverter'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import ProfileImage from '../ProfileImage'
+import Avatar from '@material-ui/core/Avatar'
 
 const Reply = (props) => {
 	const {
@@ -20,7 +20,7 @@ const Reply = (props) => {
 	return (
 		<div className="row">
 			<div className="col-1 p-0 pr-1 mt-0 text-center">
-				<ProfileImage imgSrc={profileImg} />
+				<Avatar alt={author} src={profileImg} />
 			</div>
 			<div className="col-11">
 				<div className="row">
@@ -49,6 +49,15 @@ const Reply = (props) => {
 	)
 }
 
-Reply.propTypes = {}
+Reply.propTypes = {
+	author: PropTypes.string.isRequired,
+	content: PropTypes.string.isRequired,
+	date_published: PropTypes.string.isRequired,
+	num_of_likes: PropTypes.number.isRequired,
+	profile_image: PropTypes.string
+}
+Reply.defaultProps = {
+	profile_image: null
+}
 
 export default Reply

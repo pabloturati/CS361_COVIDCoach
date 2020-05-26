@@ -67,7 +67,6 @@ export function ForumProcedures() {
 			const response = await axios.get(
 				`${baseURL}/posts?topicId=${proceduresState.activeTopic}`
 			)
-			console.log(response)
 			setLoaded({ name: DATA_KEYS.posts, value: response.data })
 		} catch (error) {
 			setError(error)
