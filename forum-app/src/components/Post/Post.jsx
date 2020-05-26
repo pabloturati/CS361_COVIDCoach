@@ -7,12 +7,13 @@ import { baseURL } from '../../constants'
 import Loader from '../Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import DateConverter from '../DateConverter'
+import ProfileImage from '../ProfileImage'
 
 const Post = ({
 	author,
 	post_title: title,
 	date_published: publishDate,
-	num_of_likes,
+	num_of_likes: numOfLikes,
 	content,
 	post_id: postId,
 	profile_image: profileImg
@@ -37,8 +38,8 @@ const Post = ({
 	if (!replies) return <Loader />
 	return (
 		<div className="row m-0">
-			<div className="col-1 p-0 pr-1 mt-3">
-				<img className="img-fluid rounded-lg" src={profileImg} alt="Profile" />
+			<div className="col-1 p-0 mt-3">
+				<ProfileImage imgSrc={profileImg} />
 			</div>
 			<div className="col-11 my-3">
 				<div className="row">
@@ -58,16 +59,14 @@ const Post = ({
 								by {author}. Posted <DateConverter date={publishDate} />
 							</span>
 							<span onClick={increaseLikes}>
-								<FavoriteIcon /> {num_of_likes}
+								<FavoriteIcon /> {numOfLikes}
 							</span>
 						</div>
 					</div>
 				</div>
-				<div>
-					{replies.map((reply) => (
-						<Reply key={reply.response_id} {...reply} />
-					))}
-				</div>
+				{replies.map((reply) => (
+					<Reply key={reply.response_id} {...reply} />
+				))}
 			</div>
 		</div>
 	)
@@ -76,8 +75,8 @@ const Post = ({
 Post.propTypes = {
 	author: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
-	date_published: PropTypes.string.isRequired
-	// num_of_likes: PropTypes.number
+	date_published: PropTypes.string.isRequired,
+	num_of_likes: PropTypes.string.isRequired
 }
 
 export default Post
