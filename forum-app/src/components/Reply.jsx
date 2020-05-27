@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DateConverter from '../DateConverter'
+import DateConverter from './DateConverter'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Avatar from '@material-ui/core/Avatar'
 

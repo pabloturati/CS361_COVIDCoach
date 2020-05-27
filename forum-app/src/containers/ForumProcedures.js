@@ -12,7 +12,8 @@ const SET_TOPIC = 'SET_TOPIC'
 export const DATA_KEYS = {
 	topics: 'topics',
 	activeTopic: 'activeTopic',
-	posts: 'posts'
+	posts: 'posts',
+	sessionData: 'sessionData'
 }
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
 	error: null,
 	refreshCount: 0,
 	activeTopic: 1,
-	posts: null
+	posts: null,
+	sessionData: null
 }
 
 const reducer = produce((draft, action) => {

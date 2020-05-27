@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE IF NOT EXISTS Users (
   user_id int auto_increment PRIMARY KEY,
   email varchar(255) NOT NULL UNIQUE,
-  google_auth_token varchar(255),
+  google_auth_token text,
   first_name varchar(255) NOT NULL,
   last_name varchar(255) NOT NULL,
   profile_image varchar(255)

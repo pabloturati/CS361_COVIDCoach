@@ -7,11 +7,10 @@ const PAGE_ROUTES = {
 const ROUTES = {
   home: '/',
   login: '/login',
-  createSession: '/auth_callback',
-  sessionResult: '/session-result',
   topics: '/topics',
   posts: '/posts',
   replies: '/replies',
+  autorizeUser: '/authorize-user',
 }
 
 module.exports = { SESSION_EXPIRATION, ROUTES, PAGE_ROUTES }

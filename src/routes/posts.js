@@ -13,4 +13,10 @@ router.get(ROUTES.posts, async (req, res, next) => {
   }
 })
 
+router.post(ROUTES.posts, async (req, res, next) => {
+  console.log(req.cookies)
+  console.log(req.body)
+  res.send('Hola')
+})
+
 module.exports = router

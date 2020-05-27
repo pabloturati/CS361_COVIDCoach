@@ -1,7 +1,7 @@
 import React from 'react'
 import { ForumContextProvider } from '../ForumContext'
 import { ForumProcedures } from '../ForumProcedures'
-import Header from '../../components/Header/Header'
+import Header from '../Header/Header'
 import TopicsBar from '../TopicsBar/TopicsBar'
 import DiscussionBoard from '../DiscussionBoard/DiscussionBoard'
 

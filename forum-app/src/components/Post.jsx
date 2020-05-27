@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import Reply from '../Reply/Reply'
-import { baseURL } from '../../constants'
-import Loader from '../Loader'
+import Reply from './Reply'
+import { baseURL } from '../constants'
+import Loader from './Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import DateConverter from '../DateConverter'
+import DateConverter from './DateConverter'
 import Avatar from '@material-ui/core/Avatar'
 
 const Post = ({

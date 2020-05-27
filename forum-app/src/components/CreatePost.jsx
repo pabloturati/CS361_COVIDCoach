@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
-const LoginForm = ({ show, handleClose }) => {
+const CreatePost = ({ show, handleClose }) => {
 	return (
 		<Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
@@ -22,13 +22,13 @@ const LoginForm = ({ show, handleClose }) => {
 	)
 }
 
-LoginForm.propTypes = {
+CreatePost.propTypes = {
 	show: PropTypes.bool,
 	onHide: PropTypes.func.isRequired
 }
 
-LoginForm.defaultProps = {
+CreatePost.defaultProps = {
 	show: false
 }
 
-export default LoginForm
+export default CreatePost
