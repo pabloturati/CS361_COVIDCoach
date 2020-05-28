@@ -7,6 +7,7 @@ const session = require('express-session')
 const MySQLStore = require('express-mysql-session')(session)
 const mysql = require('./constants/dbConfig')
 const constants = require('./constants')
+const cors = require('cors')
 
 const app = express()
 
@@ -19,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 require('hbs')
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
+
+//Same site requests
+app.use(cors())
 
 // Path to public and static setup
 const joinPath = (customPath) => path.join(__dirname, customPath)
@@ -62,11 +66,17 @@ const auth = require('./routes/auth')
 const news = require('./routes/news')
 const forum = require('./routes/forum')
 const safety = require('./routes/safety')
+const topics = require('./routes/topics')
+const posts = require('./routes/posts')
+const replies = require('./routes/replies')
 
 app.use('/', news)
 app.use('/', auth)
 app.use('/', forum)
 app.use('/', safety)
+app.use('/', topics)
+app.use('/', posts)
+app.use('/', replies)
 
 // Run using node src/app.js
 const port = process.env.PORT || 3000
