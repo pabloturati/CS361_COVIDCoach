@@ -77,7 +77,7 @@ router.post(autorizeUser, async (req, res, next) => {
       req.session.userId = dbUserData.userId //Create session
     }
     const { cookie } = req.session
-    res.send({ ...userData, expires: cookie.expires })
+    res.send({ ...dbUserData, expires: cookie.expires })
   } catch (error) {
     res.status(401)
     res.send(error)

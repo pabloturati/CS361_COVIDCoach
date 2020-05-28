@@ -10,7 +10,8 @@ import { Spinner } from 'react-bootstrap'
 import GoogleLogin from 'react-google-login'
 import { ForumContext } from '../ForumContext'
 import { DATA_KEYS } from '../ForumProcedures'
-import CreatePost from '../../components/CreatePost'
+import CreatePost from '../CreatePost'
+import { clientId } from '../../constants'
 
 const PAGE_ROUTES = {
 	news: { route: '/index', label: 'News' },
@@ -25,10 +26,8 @@ const Header = () => {
 
 	const {
 		setLoaded,
-		proceduresState: { sessionData, activeTopic }
+		proceduresState: { sessionData }
 	} = useContext(ForumContext)
-
-	console.log(sessionData)
 
 	const requestLoginLink = async () => {
 		try {
@@ -56,21 +55,25 @@ const Header = () => {
 			)
 			setLoaded({ name: DATA_KEYS.sessionData, value: response.data })
 		} catch (e) {
-			console.log(e)
+			console.error(e)
 		}
 	}
 
-	const { name: userName, picture } = sessionData || {}
+	const { first_name: firstName, last_name: lastName, profile_image: picture } =
+		sessionData || {}
 	const modalProps = {
 		show: showCreatePost,
 		handleClose: () => setShowCreatePost(false)
 	}
+
 	return (
 		<header>
 			<div className="d-flex align-items-center justify-content-between">
 				<h1 className="site-title">CovidCoach Forum</h1>
 				<div className="d-flex align-items-center mx-3">
-					{sessionData && <h5 style={{ color: '#FFF' }}>{userName}</h5>}
+					{sessionData && (
+						<h5 style={{ color: '#FFF' }}>{`${firstName} ${lastName}`}</h5>
+					)}
 					<Avatar
 						className="mx-2"
 						alt={'author'}
@@ -78,12 +81,12 @@ const Header = () => {
 					/>
 					{!sessionData && loginLink && (
 						<GoogleLogin
-							clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+							// clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+							clientId={clientId}
 							buttonText="Login"
 							onSuccess={responseGoogle}
 							onFailure={() => {}}
 							cookiePolicy={'single_host_origin'}
-							isSignedIn={true}
 						/>
 					)}
 					{!sessionData && !loginLink && (

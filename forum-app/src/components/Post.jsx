@@ -7,6 +7,7 @@ import Loader from './Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import DateConverter from './DateConverter'
 import Avatar from '@material-ui/core/Avatar'
+import moment from 'moment'
 
 const Post = ({
 	author,
@@ -27,7 +28,7 @@ const Post = ({
 		}
 	}
 	const increaseLikes = () => {
-		console.log('like')
+		// Pending
 	}
 
 	useEffect(() => {

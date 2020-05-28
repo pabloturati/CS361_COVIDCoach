@@ -9,6 +9,7 @@ const TopicsBar = () => {
 		proceduresState: { topics, activeTopic },
 		setActiveTopic
 	} = useContext(ForumContext)
+
 	if (!topics) return <Loader />
 	return (
 		<Nav

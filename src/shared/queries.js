@@ -30,7 +30,19 @@ const postsQueries = {
       INNER JOIN Users U ON P.user_id=U.user_id
       INNER JOIN topics_posts TP ON P.post_id=TP.post_id
       INNER JOIN Topics T ON T.topic_id=TP.topic_id
-      WHERE T.topic_id=${topicId};`
+      WHERE T.topic_id=${topicId}
+      ORDER BY date_published DESC;
+      ;`
+    ),
+
+  createNewPost: ({ date, title, content, userId }) =>
+    runQuery(
+      `INSERT INTO Posts (user_id, date_published, num_of_likes, title, content) VALUES 
+      (${userId}, STR_TO_DATE("${date}", '%m-%d-%Y %r'), 0, "${title}", "${content}");`
+    ),
+  linkPostToTopic: ({ postId, topicId }) =>
+    runQuery(
+      `INSERT INTO topics_posts (topic_id, post_id) VALUES (${topicId}, "${postId}");`
     ),
 }
 

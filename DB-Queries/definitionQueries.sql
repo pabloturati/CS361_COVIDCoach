@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Posts (
   post_id int auto_increment PRIMARY KEY,
   user_id int,
-  date_published date NOT NULL,
+  date_published DATETIME NOT NULL,
   num_of_likes int NOT NULL,
   title varchar(255) NOT NULL,
   content text NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS Responses (
   response_id int auto_increment PRIMARY KEY,
   post_id int,
   user_id int,
-  date_published date NOT NULL,
+  date_published DATETIME NOT NULL,
   num_of_likes int NOT NULL,
   content text NOT NULL,
   FOREIGN KEY (post_id) REFERENCES Posts(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -77,22 +77,22 @@ INSERT INTO Users (user_id, email,  google_auth_token, first_name, last_name, pr
  (3, "eri40johnson@gmail.com", "XXXXXXXXXYYYYYYZZZZ", "Erie", "Johnson", "https://www2.erie.gov/johnson/sites/www2.erie.gov.johnson/files/uploads/howard-johnson.jpg");
 
 INSERT INTO Posts (post_id, user_id, date_published, num_of_likes, title, content) VALUES 
-  (1, 1, STR_TO_DATE('03-21-2020', '%m-%d-%Y'), 3, "The struggle to survive", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien pellentesque habitant morbi tristique senectus. In est ante in nibh mauris cursus mattis molestie a. Ut tortor pretium viverra suspendisse potenti."),
-  (2, 1, STR_TO_DATE('03-22-2020', '%m-%d-%Y'), 5, "The beginning of the end", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id velit ut tortor pretium. Rhoncus urna neque viverra justo nec ultrices."),
-  (3, 2, STR_TO_DATE('04-22-2020', '%m-%d-%Y'), 2, "List of Recommendations", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere. Ornare suspendisse sed nisi lacus sed. Enim nec dui nunc mattis enim ut tellus elementum sagittis."),
-  (4, 2, STR_TO_DATE('05-01-2020', '%m-%d-%Y'), 2, "Medical Attention Needed here", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
-  (5, 2, STR_TO_DATE('05-02-2020', '%m-%d-%Y'), 0, "Prevention is key", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quis hendrerit dolor magna eget est lorem ipsum dolor. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Volutpat sed cras ornare arcu dui vivamus. Mi ipsum faucibus vitae aliquet nec ullamcorper sit.");
+  (1, 1, STR_TO_DATE('03-21-2020 9:06:26 AM', '%m-%d-%Y %r'), 3, "The struggle to survive", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Malesuada proin libero nunc consequat interdum varius sit amet mattis. Sapien pellentesque habitant morbi tristique senectus. In est ante in nibh mauris cursus mattis molestie a. Ut tortor pretium viverra suspendisse potenti."),
+  (2, 1, STR_TO_DATE('03-22-2020 10:06:26 AM', '%m-%d-%Y %r'), 5, "The beginning of the end", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Id velit ut tortor pretium. Rhoncus urna neque viverra justo nec ultrices."),
+  (3, 2, STR_TO_DATE('04-22-2020 8:06:26 PM', '%m-%d-%Y %r'), 2, "List of Recommendations", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere. Ornare suspendisse sed nisi lacus sed. Enim nec dui nunc mattis enim ut tellus elementum sagittis."),
+  (4, 2, STR_TO_DATE('05-01-2020 8:11:26 PM', '%m-%d-%Y %r'), 2, "Medical Attention Needed here", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
+  (5, 2, STR_TO_DATE('05-02-2020 1:06:26 PM', '%m-%d-%Y %r'), 0, "Prevention is key", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quis hendrerit dolor magna eget est lorem ipsum dolor. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Volutpat sed cras ornare arcu dui vivamus. Mi ipsum faucibus vitae aliquet nec ullamcorper sit.");
 
 INSERT INTO topics_posts (topic_id, post_id) VALUES 
 (1, 1),
 (1, 2),
-(2, 3),
-(5, 4),
+(3, 3),
+(2, 4),
 (4, 4);
 
 INSERT INTO Responses (response_id, post_id, date_published, user_id, num_of_likes, content) VALUES 
-  (1, 1, STR_TO_DATE('03-21-2020', '%m-%d-%Y'), 2, 1, "Their could can widen ten she any. As so we smart those money in. Am wrote up whole so tears sense oh. Absolute required of reserved in offering no. How sense found our those gay again taken the. Had mrs outweigh desirous sex overcame. Improved property reserved disposal do offering me. "),
-  (2, 1, STR_TO_DATE('03-22-2020', '%m-%d-%Y'), 2, 2, "It if sometimes furnished unwilling as additions so."),
-  (3, 2, STR_TO_DATE('04-22-2020', '%m-%d-%Y'), 2, 2, "Call park out she wife face mean."),
-  (4, 2, STR_TO_DATE('05-01-2020', '%m-%d-%Y'), 3, 2, "Passage weather as up am exposed. And natural related man subject. Eagerness get situation his was delighted."),
-  (5, 2, STR_TO_DATE('05-02-2020', '%m-%d-%Y'), 1, 0, "No great but music too old found arose. ");
+  (1, 1, STR_TO_DATE('03-21-2020 6:11:26 PM', '%m-%d-%Y %r'), 2, 1, "Their could can widen ten she any. As so we smart those money in.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quis hendrerit dolor magna eget est lorem ipsum dolor. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Volutpat sed cras ornare arcu dui vivamus. Mi ipsum faucibus vitae aliquet nec ullamcorper sit."),
+  (2, 1, STR_TO_DATE('03-22-2020 3:06:29 PM', '%m-%d-%Y %r'), 2, 2, "It if sometimes furnished unwilling as additions so."),
+  (3, 2, STR_TO_DATE('04-22-2020 1:36:36 PM', '%m-%d-%Y %r'), 2, 2, "Call park out she wife face mean."),
+  (4, 2, STR_TO_DATE('05-01-2020 7:56:26 PM', '%m-%d-%Y %r'), 3, 2, "Passage weather. And natural related man subject. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Quis hendrerit dolor magna eget est lorem ipsum dolor. Pharetra massa massa ultricies mi quis hendrerit dolor magna. Volutpat sed cras ornare arcu dui vivamus. Mi ipsum faucibus vitae aliquet nec ullamcorper sit."),
+  (5, 2, STR_TO_DATE('05-02-2020 11:06:26 PM', '%m-%d-%Y %r'), 1, 0, "No great but music. ");

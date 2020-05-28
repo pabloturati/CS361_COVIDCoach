@@ -13,7 +13,8 @@ export const DATA_KEYS = {
 	topics: 'topics',
 	activeTopic: 'activeTopic',
 	posts: 'posts',
-	sessionData: 'sessionData'
+	sessionData: 'sessionData',
+	topicList: 'topicList'
 }
 
 const initialState = {
@@ -90,6 +91,7 @@ export function ForumProcedures() {
 		setLoading,
 		setError,
 		setLoaded,
-		setActiveTopic
+		setActiveTopic,
+		loadPosts
 	}
 }
