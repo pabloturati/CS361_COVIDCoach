@@ -47,15 +47,16 @@ h3 {
   font-size: 200%;
   text-align:left;
 }
+
 h4{
 	font-size: 200%;
-  	text-align: right;
+  text-align: right;
 }
 
 .tips{
 	padding: 20px;
 	border: 2px solid black;
-	background-color: ;
+	margin: 50px;
 }
 
 .tipsitems{
@@ -63,17 +64,25 @@ h4{
 	color: black;
 	font-size: 120%;
 }
+
 .tipsitem{
 	font-size: 120%;
 	color: black;
 }
+
 .link{
-	text-align : right;
-	color: black;
+    color: black;
 }
-link:hover{
-	background-color:red;
+
+.links{
+  color: black;
+  text-align: right
 }
+
+.link:hover{
+	text-decoration: underline;
+}
+
 .tipsitem:before{
 	content:"• ";
 }
@@ -111,6 +120,19 @@ link:hover{
   display: flex;
   justify-content: center;
 }
+
 .tips{
 	background-color: #FBEEC1;
+}
+
+#map{
+    height: 400px;
+    width: 100%;
+    border: 2px solid black;
+    margin: 30px;
+}
+
+h5{
+  text-align: center;
+  font-size: 30px;
 }
