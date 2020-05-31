@@ -57,7 +57,7 @@ app.use(
     resave: false,
     saveUninitialized: false, //Verify
     store: sessionStore,
-    secret: SESSION_SECRET,
+    secret: 'c0V!DI9',
   })
 )
 
