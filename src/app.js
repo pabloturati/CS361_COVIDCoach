@@ -14,7 +14,9 @@ const app = express()
 // Middleware Setup
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 
 // View engine config
 require('hbs')
@@ -26,14 +28,21 @@ app.use(cors())
 
 // Path to public and static setup
 const joinPath = (customPath) => path.join(__dirname, customPath)
-app.use(express.static(joinPath('../forum-app/build'), { index: false }))
-app.use(express.static(joinPath('../public'), { index: false }))
+app.use(express.static(joinPath('../forum-app/build'), {
+  index: false
+}))
+app.use(express.static(joinPath('../public'), {
+  index: false
+}))
 global.appRoot = path.resolve(__dirname, '../')
 
 // Session config
-const { SESSION_NAME, SESSION_DURATION, SESSION_SECRET } = process.env
-const sessionStore = new MySQLStore(
-  {
+const {
+  SESSION_NAME,
+  SESSION_DURATION,
+  SESSION_SECRET
+} = process.env
+const sessionStore = new MySQLStore({
     expiration: constants.SESSION_EXPIRATION, //3h
     createDatabaseTable: true,
     schema: {
