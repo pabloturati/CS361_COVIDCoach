@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import Reply from './Reply'
+import { ForumContext } from './ForumContext'
+import Reply from '../components/Reply'
 import { baseURL } from '../constants'
-import Loader from './Loader'
+import Loader from '../components/Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import DateConverter from './DateConverter'
+import DateConverter from '../components/DateConverter'
 import Avatar from '@material-ui/core/Avatar'
-import moment from 'moment'
+import Button from '@material-ui/core/Button'
+import CreatePost from './CreatePost'
 
 const Post = ({
 	author,
@@ -18,7 +20,12 @@ const Post = ({
 	post_id: postId,
 	profile_image: profileImg
 }) => {
+	const {
+		proceduresState: { sessionData }
+	} = useContext(ForumContext)
+
 	const [replies, setReplies] = useState(null)
+	const [showReplyModal, setShowReplyModal] = useState(false)
 	const getReplies = async () => {
 		try {
 			const response = await axios.get(`${baseURL}/replies?postId=${postId}`)
@@ -41,7 +48,7 @@ const Post = ({
 			<div className="col-1 p-0 mt-3">
 				<Avatar alt={author} src={profileImg} />
 			</div>
-			<div className="col-11 my-3">
+			<div className="col-11 my-1">
 				<div className="row">
 					<div
 						className="col-12 rounded mb-1 p-1 "
@@ -52,15 +59,25 @@ const Post = ({
 							{content}
 						</p>
 						<div
-							className="text-muted m-0 d-flex justify-content-between"
+							className="text-muted m-0 d-flex justify-content-between align-items-end mb-1"
 							style={{ fontSize: '0.8rem' }}
 						>
-							<span>
+							<span className="link">
 								by {author}. Posted <DateConverter date={publishDate} />
 							</span>
-							<span onClick={increaseLikes}>
-								<FavoriteIcon /> {numOfLikes}
-							</span>
+							<div>
+								<span onClick={increaseLikes} className="mr-2">
+									<FavoriteIcon /> {numOfLikes}
+								</span>
+								<Button
+									variant="outlined"
+									color="primary"
+									disabled={!sessionData}
+									onClick={() => setShowReplyModal(true)}
+								>
+									{sessionData ? 'reply' : 'Login to Reply'}
+								</Button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -68,6 +85,13 @@ const Post = ({
 					<Reply key={reply.response_id} {...reply} />
 				))}
 			</div>
+			<CreatePost
+				isReply
+				show={showReplyModal}
+				handleClose={() => setShowReplyModal(false)}
+				parentPostId={postId}
+				updateRepliesCallback={getReplies}
+			/>
 		</div>
 	)
 }

@@ -49,6 +49,11 @@ const postsQueries = {
 const replyQueries = {
   findAllRepliesByPostId: (postId) =>
     runQuery(`SELECT response_id, date_published, num_of_likes, content, CONCAT_WS(" ", first_name, last_name) AS author, profile_image FROM Responses R 
-    INNER JOIN Users U ON R.user_id = U.user_id WHERE post_id=${postId};`),
+    INNER JOIN Users U ON R.user_id = U.user_id WHERE post_id=${postId}
+    ORDER BY date_published DESC;`),
+
+  createNewReply: ({ postId, userId, date, content }) =>
+    runQuery(`INSERT INTO Responses (post_id, user_id, date_published, num_of_likes, content) VALUES 
+  (${postId}, ${userId}, STR_TO_DATE("${date}", '%m-%d-%Y %r'), 0, "${content}");`),
 }
 module.exports = { authQueries, topicsQueries, postsQueries, replyQueries }

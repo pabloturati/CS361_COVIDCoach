@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const moment = require('moment')
 
 const { ROUTES } = require('../constants')
 const {
@@ -7,6 +6,8 @@ const {
   createNewPost,
   linkPostToTopic,
 } = require('../shared/queries').postsQueries
+
+const { createNowDate } = require('../shared/sharedFunctions')
 
 router.get(ROUTES.posts, async (req, res, next) => {
   try {
@@ -22,9 +23,8 @@ router.get(ROUTES.posts, async (req, res, next) => {
 router.post(ROUTES.posts, async (req, res, next) => {
   try {
     const { title, content, topic_id: topicId, user_id: userId } = req.body
-    const date = moment().format('MM-DD-YYYY hh:mm:ss A')
     const createPostResult = await createNewPost({
-      date,
+      date: createNowDate(),
       title,
       content,
       userId,

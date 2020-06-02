@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
-import Post from '../../components/Post'
+import Post from '../Post'
 import { ForumContext } from '../ForumContext'
 import Loader from '../../components/Loader'
 
