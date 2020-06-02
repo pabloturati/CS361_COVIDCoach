@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import { ForumContext } from './ForumContext'
-import Reply from '../components/Reply'
-import { baseURL } from '../constants'
-import Loader from '../components/Loader'
+import { ForumContext } from '../ForumContext'
+import Reply from '../../components/Reply'
+import { baseURL } from '../../constants'
+import Loader from '../../components/Loader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
-import DateConverter from '../components/DateConverter'
+import DateConverter from '../../components/DateConverter'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import CreatePost from './CreatePost'
+import CreatePost from '../CreatePost'
+import './Post.scss'
 
 const Post = ({
 	author,
@@ -21,11 +22,13 @@ const Post = ({
 	profile_image: profileImg
 }) => {
 	const {
-		proceduresState: { sessionData }
+		proceduresState: { sessionData },
+		loadPosts
 	} = useContext(ForumContext)
 
 	const [replies, setReplies] = useState(null)
 	const [showReplyModal, setShowReplyModal] = useState(false)
+	const [likeLoading, setLikeLoading] = useState(false)
 	const getReplies = async () => {
 		try {
 			const response = await axios.get(`${baseURL}/replies?postId=${postId}`)
@@ -34,8 +37,23 @@ const Post = ({
 			console.error(e)
 		}
 	}
-	const increaseLikes = () => {
-		// Pending
+	const increaseLikes = async () => {
+		try {
+			setLikeLoading(true)
+			const increaseLikeResult = await axios.post(`${baseURL}/posts/like`, {
+				postId,
+				userId: sessionData.user_id
+			})
+			if (increaseLikeResult instanceof Error) throw increaseLikeResult
+			loadPosts()
+		} catch (error) {
+			console.error(error)
+		} finally {
+			setLikeLoading(false)
+		}
+	}
+	const requestUserToLogin = () => {
+		window.alert('Please login to post or like')
 	}
 
 	useEffect(() => {
@@ -66,17 +84,32 @@ const Post = ({
 								by {author}. Posted <DateConverter date={publishDate} />
 							</span>
 							<div>
-								<span onClick={increaseLikes} className="mr-2">
-									<FavoriteIcon /> {numOfLikes}
-								</span>
-								<Button
-									variant="outlined"
-									color="primary"
-									disabled={!sessionData}
-									onClick={() => setShowReplyModal(true)}
-								>
-									{sessionData ? 'reply' : 'Login to Reply'}
-								</Button>
+								{!likeLoading && (
+									<span
+										onClick={sessionData ? increaseLikes : requestUserToLogin}
+										className="mr-2 favorite-box"
+									>
+										<FavoriteIcon /> <span>{numOfLikes}</span>
+									</span>
+								)}
+								{likeLoading && (
+									<div
+										className="spinner-grow spinner-grow-sm text-secondary mr-2"
+										role="status"
+									>
+										<span className="sr-only">Loading...</span>
+									</div>
+								)}
+								{sessionData && (
+									<Button
+										variant="outlined"
+										color="primary"
+										disabled={!sessionData}
+										onClick={() => setShowReplyModal(true)}
+									>
+										Reply
+									</Button>
+								)}
 							</div>
 						</div>
 					</div>

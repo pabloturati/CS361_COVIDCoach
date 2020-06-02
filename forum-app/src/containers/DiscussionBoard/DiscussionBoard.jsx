@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Post from '../Post'
+import Post from '../Post/Post'
 import { ForumContext } from '../ForumContext'
 import Loader from '../../components/Loader'
 

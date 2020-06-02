@@ -44,6 +44,10 @@ const postsQueries = {
     runQuery(
       `INSERT INTO topics_posts (topic_id, post_id) VALUES (${topicId}, "${postId}");`
     ),
+  increasePostLikes: (postId) =>
+    runQuery(
+      `UPDATE Posts SET num_of_likes = num_of_likes + 1 WHERE post_id=${postId};`
+    ),
 }
 
 const replyQueries = {
@@ -55,5 +59,9 @@ const replyQueries = {
   createNewReply: ({ postId, userId, date, content }) =>
     runQuery(`INSERT INTO Responses (post_id, user_id, date_published, num_of_likes, content) VALUES 
   (${postId}, ${userId}, STR_TO_DATE("${date}", '%m-%d-%Y %r'), 0, "${content}");`),
+  increaseReplyLikes: (replytId) =>
+    runQuery(
+      `UPDATE Responses SET num_of_likes = num_of_likes + 1 WHERE response_id=${replytId};`
+    ),
 }
 module.exports = { authQueries, topicsQueries, postsQueries, replyQueries }

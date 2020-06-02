@@ -5,6 +5,7 @@ const {
   findAllPostsByTopicId,
   createNewPost,
   linkPostToTopic,
+  increasePostLikes,
 } = require('../shared/queries').postsQueries
 
 const { createNowDate } = require('../shared/sharedFunctions')
@@ -16,6 +17,22 @@ router.get(ROUTES.posts, async (req, res, next) => {
     res.send(posts)
   } catch (error) {
     console.error(posts)
+    next()
+  }
+})
+
+router.post(`${ROUTES.posts}/like`, async (req, res, next) => {
+  const { postId } = req.body
+  if (postId) {
+    try {
+      const result = await increasePostLikes(postId)
+      if (result instanceof Error) throw result
+      res.status(200)
+      res.send(result)
+    } catch (error) {
+      res.send(error)
+    }
+  } else {
     next()
   }
 })
