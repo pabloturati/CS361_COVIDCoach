@@ -106,7 +106,7 @@ const CreatePost = ({
 				{!isReply && (
 					<TextField
 						select
-						label="Native select"
+						label="Select topic"
 						value={topic}
 						onChange={(e) => {
 							setTopic(e.target.value)

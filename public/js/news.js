@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  let url = `http://newsapi.org/v2/top-headlines?q=COVID&country=us&apiKey=859544f6579f40a2aaf1474bee4c6356`
+  let url = `https://newsapi.org/v2/top-headlines?q=COVID&country=us&apiKey=859544f6579f40a2aaf1474bee4c6356`
   $.ajax({
     url: url,
     method: 'GET',
