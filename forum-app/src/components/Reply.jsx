@@ -1,20 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import DateConverter from './DateConverter'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Avatar from '@material-ui/core/Avatar'
+import axios from 'axios'
+import { baseURL } from '../constants'
 
-const Reply = (props) => {
-	const {
-		date_published: publishDate,
-		content,
-		author,
-		profile_image: profileImg,
-		num_of_likes: numOfLikes
-	} = props
-
-	const increaseLikes = () => {
-		console.log('like')
+const Reply = ({
+	date_published: publishDate,
+	content,
+	author,
+	profile_image: profileImg,
+	num_of_likes: numOfLikes,
+	sessionData,
+	requestUserToLogin,
+	updateRepliesCallback,
+	response_id: responseId
+}) => {
+	const [likeLoading, setLikeLoading] = useState(false)
+	const increaseLikes = async () => {
+		try {
+			setLikeLoading(true)
+			const increaseLikeResult = await axios.post(`${baseURL}/replies/like`, {
+				replyId: responseId,
+				userId: sessionData.user_id
+			})
+			if (increaseLikeResult instanceof Error) throw increaseLikeResult
+			updateRepliesCallback()
+		} catch (error) {
+			console.error(error)
+		} finally {
+			setLikeLoading(false)
+		}
 	}
 
 	return (
@@ -38,9 +55,22 @@ const Reply = (props) => {
 							<span>
 								by {author}. Posted <DateConverter date={publishDate} />
 							</span>
-							<span onClick={increaseLikes}>
-								<FavoriteIcon /> {numOfLikes}
-							</span>
+							{!likeLoading && (
+								<span
+									onClick={sessionData ? increaseLikes : requestUserToLogin}
+									className="mr-2 favorite-box"
+								>
+									<FavoriteIcon /> <span>{numOfLikes}</span>
+								</span>
+							)}
+							{likeLoading && (
+								<div
+									className="spinner-grow spinner-grow-sm text-secondary mr-2"
+									role="status"
+								>
+									<span className="sr-only">Loading...</span>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
@@ -54,7 +84,10 @@ Reply.propTypes = {
 	content: PropTypes.string.isRequired,
 	date_published: PropTypes.string.isRequired,
 	num_of_likes: PropTypes.number.isRequired,
-	profile_image: PropTypes.string
+	profile_image: PropTypes.string,
+	sessionData: PropTypes.objectOf(PropTypes.any),
+	requestUserToLogin: PropTypes.func.isRequired,
+	updateRepliesCallback: PropTypes.func.isRequired
 }
 Reply.defaultProps = {
 	profile_image: null

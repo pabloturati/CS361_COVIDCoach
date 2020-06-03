@@ -115,7 +115,13 @@ const Post = ({
 					</div>
 				</div>
 				{replies.map((reply) => (
-					<Reply key={reply.response_id} {...reply} />
+					<Reply
+						key={reply.response_id}
+						{...reply}
+						sessionData={sessionData}
+						requestUserToLogin={requestUserToLogin}
+						updateRepliesCallback={getReplies}
+					/>
 				))}
 			</div>
 			<CreatePost

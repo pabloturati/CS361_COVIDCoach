@@ -3,6 +3,7 @@ const { ROUTES } = require('../constants')
 const {
   findAllRepliesByPostId,
   createNewReply,
+  increaseReplyLikes,
 } = require('../shared/queries').replyQueries
 const { createNowDate } = require('../shared/sharedFunctions')
 
@@ -32,6 +33,22 @@ router.post(ROUTES.replies, async (req, res) => {
     console.error(error)
     res.status(400)
     res.send(error)
+  }
+})
+
+router.post(`${ROUTES.replies}/like`, async (req, res, next) => {
+  const { replyId } = req.body
+  if (replyId) {
+    try {
+      const result = await increaseReplyLikes(replyId)
+      if (result instanceof Error) throw result
+      res.status(200)
+      res.send(result)
+    } catch (error) {
+      res.send(error)
+    }
+  } else {
+    next()
   }
 })
 
