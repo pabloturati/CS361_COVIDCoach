@@ -8,11 +8,16 @@ import { baseURL } from '../constants'
 import Loader from '../components/Loader'
 import axios from 'axios'
 
-const CreatePost = ({ show, handleClose }) => {
+const CreatePost = ({
+	show,
+	handleClose,
+	isReply,
+	parentPostId,
+	updateRepliesCallback
+}) => {
 	const {
 		proceduresState: { sessionData, activeTopic, topics },
-		loadPosts,
-		setActiveTopic
+		loadPosts
 	} = useContext(ForumContext)
 
 	const [titleValue, setTitleValue] = useState('')
@@ -20,7 +25,7 @@ const CreatePost = ({ show, handleClose }) => {
 	const [topic, setTopic] = useState(null)
 	const [loading, setLoading] = useState('')
 
-	const handleSubmit = async () => {
+	const handleNewPostSubmit = async () => {
 		const selectedTopic = topics
 			? topics.find((item) => item.title === topic)
 			: null
@@ -42,6 +47,26 @@ const CreatePost = ({ show, handleClose }) => {
 			handleClose()
 		}
 	}
+
+	const handleReplySubmit = async () => {
+		const body = {
+			content: contentValue,
+			user_id: sessionData.user_id,
+			parentPostId
+		}
+		try {
+			setLoading(true)
+			const result = await axios.post(`${baseURL}/replies`, body)
+			if (result instanceof Error) throw result
+			await updateRepliesCallback()
+		} catch (error) {
+			console.error(error)
+		} finally {
+			setLoading(false)
+			handleClose()
+		}
+	}
+
 	useEffect(() => {
 		if (topics)
 			setTopic(topics.find((topic) => topic.topic_id === activeTopic).title)
@@ -51,58 +76,63 @@ const CreatePost = ({ show, handleClose }) => {
 	return (
 		<Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
-				<Modal.Title>Create a new post</Modal.Title>
+				<Modal.Title>
+					{isReply ? 'Write reply' : 'Create a new post'}
+				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body className="d-flex flex-column">
+				{!isReply && (
+					<TextField
+						label="Post title"
+						className="pb-3"
+						variant="outlined"
+						value={titleValue}
+						onChange={(e) => {
+							setTitleValue(e.target.value)
+						}}
+					/>
+				)}
 				<TextField
-					id="outlined-basic"
-					label="Title"
-					className="pb-3"
-					variant="outlined"
-					value={titleValue}
-					onChange={(e) => {
-						setTitleValue(e.target.value)
-					}}
-				/>
-				<TextField
-					id="outlined-multiline-static"
-					label="Multiline"
+					label={isReply ? 'Reply content' : 'New post content'}
 					multiline
 					rows={4}
 					className="pb-3"
-					defaultValue="Default Value"
 					variant="outlined"
 					value={contentValue}
 					onChange={(e) => {
 						setContentValue(e.target.value)
 					}}
 				/>
-				<TextField
-					id="standard-select-currency-native"
-					select
-					label="Native select"
-					value={topic}
-					onChange={(e) => {
-						setTopic(e.target.value)
-					}}
-					SelectProps={{
-						native: true
-					}}
-					helperText="Please select your currency"
-				>
-					{topics.map((topic) => (
-						<option key={topic.topic_id} value={topic.title}>
-							{topic.title}
-						</option>
-					))}
-				</TextField>
+				{!isReply && (
+					<TextField
+						select
+						label="Native select"
+						value={topic}
+						onChange={(e) => {
+							setTopic(e.target.value)
+						}}
+						SelectProps={{
+							native: true
+						}}
+						helperText="Please select the topic for the new post"
+					>
+						{topics.map((topic) => (
+							<option key={topic.topic_id} value={topic.title}>
+								{topic.title}
+							</option>
+						))}
+					</TextField>
+				)}
 			</Modal.Body>
 			<Modal.Footer>
 				<Button variant="secondary" onClick={handleClose}>
 					Close
 				</Button>
-				<Button variant="info" onClick={handleSubmit}>
-					Publish new post
+				<Button
+					variant="info"
+					onClick={isReply ? handleReplySubmit : handleNewPostSubmit}
+				>
+					{isReply ? 'Post reply' : 'Publish new post'}
 				</Button>
 			</Modal.Footer>
 		</Modal>
@@ -111,7 +141,10 @@ const CreatePost = ({ show, handleClose }) => {
 
 CreatePost.propTypes = {
 	show: PropTypes.bool.isRequired,
-	handleClose: PropTypes.func.isRequired
+	handleClose: PropTypes.func.isRequired,
+	parentPostId: PropTypes.number,
+	isReply: PropTypes.bool,
+	updateRepliesCallback: PropTypes.func
 }
 
 export default CreatePost
