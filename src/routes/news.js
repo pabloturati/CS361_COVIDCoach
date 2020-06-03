@@ -12,7 +12,6 @@ router.get('/index', async (req, res) => {
   res.render('news', {
     title: 'Covid News',
     news: news.data.articles,
-    test: 'pablo',
   })
 })
 
