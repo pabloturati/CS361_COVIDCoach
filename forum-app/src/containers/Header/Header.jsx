@@ -14,7 +14,7 @@ import CreatePost from '../CreatePost'
 import { clientId } from '../../constants'
 
 const PAGE_ROUTES = {
-	news: { route: '/index', label: 'Latests News' },
+	news: { route: '/index', label: 'Latest News' },
 	safety: { route: '/safety', label: 'Safety Tips' },
 	forum: { route: '/forum', label: 'Forum' }
 }
