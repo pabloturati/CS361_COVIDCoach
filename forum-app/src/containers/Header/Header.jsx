@@ -81,7 +81,6 @@ const Header = () => {
 					/>
 					{!sessionData && loginLink && (
 						<GoogleLogin
-							// clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
 							clientId={clientId}
 							buttonText="Login"
 							onSuccess={responseGoogle}
